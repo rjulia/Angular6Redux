@@ -27,14 +27,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
       takeUntil(this.componentDestroyed))
       .subscribe(ui => this.cargando = ui.isLoading );
   }
+
+  ngOnDestroy() {
+    // this.subscription.unsubscribe()
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
+  }
+
   onSubmit( data: any ) {
     console.log(data);
     this.authService.crearUsuario( data.nombre, data.email, data.password );
-  }
-
-  ngOnDestroy(){
-    this.componentDestroyed.next();
-    this.componentDestroyed.unsubscribe();
   }
 
 }
